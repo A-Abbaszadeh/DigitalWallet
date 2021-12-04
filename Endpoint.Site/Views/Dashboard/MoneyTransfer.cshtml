@@ -1,0 +1,38 @@
+﻿@model Endpoint.Site.Models.ViewModels.MoneyTransfer.MoneyTransferViewModel
+
+@{
+    ViewData["Title"] = "MoneyTransfer";
+}
+
+<h1>MoneyTransfer</h1>
+
+<h4>Money Transfer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="MoneyTransfer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DestinationAccountNumber" class="control-label"></label>
+                <input asp-for="DestinationAccountNumber" class="form-control" />
+                <span asp-validation-for="DestinationAccountNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransferAmount" class="control-label"></label>
+                <input asp-for="TransferAmount" class="form-control" />
+                <span asp-validation-for="TransferAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Transfer" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

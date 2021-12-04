@@ -1,4 +1,5 @@
 using DigitalWallet.Application.Interfaces.Contexts;
+using DigitalWallet.Application.Services.Transactions.Commands.MoneyTransfer;
 using DigitalWallet.Application.Services.Transactions.Queries.GetUserTransactions;
 using DigitalWallet.Application.Services.Users.Commands.EditUserProfile;
 using DigitalWallet.Application.Services.Users.Commands.RegisterUser;
@@ -53,6 +54,7 @@ namespace Endpoint.Site
             services.AddScoped<IGetUserProfileService, GetUserProfileService>();
             services.AddScoped<IEditUserProfileService, EditUserProfileService>();
             services.AddScoped<IGetUserTransactionsService, GetUserTransactionsService>();
+            services.AddScoped<IMoneyTransferService, MoneyTransferService>();
 
             string contectionString = @"Data Source=DESKTOP-ABNJIE3\MSSQLSERVER2019; Initial Catalog=DigitalWalletDB; Integrated Security=True;";
             services.AddEntityFrameworkSqlServer().AddDbContext<DatabaseContext>(option => option.UseSqlServer(contectionString));

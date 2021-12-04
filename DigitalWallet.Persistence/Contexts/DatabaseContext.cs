@@ -36,4 +36,17 @@ namespace DigitalWallet.Persistence.Contexts
             modelBuilder.Entity<Transaction>().Property(t => t.Creditor).HasDefaultValue(0);
         }
     }
+
+/*    public class MyClass
+    {
+        private readonly DatabaseContext _database;
+        public MyClass(DatabaseContext database)
+        {
+            _database = database;
+        }
+        public void myMethod()
+        {
+            _database.Da
+        }
+    }*/
 }

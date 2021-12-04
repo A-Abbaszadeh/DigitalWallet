@@ -1,6 +1,8 @@
-﻿using DigitalWallet.Application.Services.Transactions.Queries.GetUserTransactions;
+﻿using DigitalWallet.Application.Services.Transactions.Commands.MoneyTransfer;
+using DigitalWallet.Application.Services.Transactions.Queries.GetUserTransactions;
 using DigitalWallet.Application.Services.Users.Commands.EditUserProfile;
 using DigitalWallet.Application.Services.Users.Queries.GetDashboeardData;
+using Endpoint.Site.Models.ViewModels.MoneyTransfer;
 using Endpoint.Site.Models.ViewModels.ProfileVIewModel;
 using Endpoint.Site.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +20,16 @@ namespace Endpoint.Site.Controllers
         private readonly IGetDashboeardDataService _getDashboeardDataService;
         private readonly IEditUserProfileService _editUserProfileService;
         private readonly IGetUserTransactionsService _getUserTransactionsService;
+        private readonly IMoneyTransferService _moneyTransferService;
         public DashboardController(IGetDashboeardDataService getDashboeardDataService
             , IEditUserProfileService editUserProfileService
-            , IGetUserTransactionsService getUserTransactionsService)
+            , IGetUserTransactionsService getUserTransactionsService
+            , IMoneyTransferService moneyTransferService)
         {
             _getDashboeardDataService = getDashboeardDataService;
             _editUserProfileService = editUserProfileService;
             _getUserTransactionsService = getUserTransactionsService;
+            _moneyTransferService = moneyTransferService;
         }
         public IActionResult Profile()
         {
@@ -63,6 +68,26 @@ namespace Endpoint.Site.Controllers
         {
             long UserId = ClaimUtility.GetUserId(User).Value;
             return Json(_getUserTransactionsService.Execute(UserId));
+        }
+
+        [HttpGet]
+        public IActionResult MoneyTransfer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MoneyTransfer(MoneyTransferViewModel request)
+        {
+            long userId = ClaimUtility.GetUserId(User).Value;
+            long sourceAccountNumber = _getDashboeardDataService.Execute(userId).Data.AccountNumber;
+            var resultmoneyTransfer = _moneyTransferService.Execute(new RequestMoneyTransfer
+            {
+                SourceAccountNumber = sourceAccountNumber,
+                DestinationAccountNumber = request.DestinationAccountNumber,
+                TransferAmount = request.TransferAmount
+            });
+            return Json(resultmoneyTransfer);
         }
 
 

@@ -37,6 +37,7 @@ namespace DigitalWallet.Application.Services.Users.Queries.GetDashboeardData
                     {
                         FirstName = "",
                         LastName = "",
+                        AccountNumber = 0,
                         Balance = 0,
                         TotalTransactions =0
                     },
@@ -50,6 +51,7 @@ namespace DigitalWallet.Application.Services.Users.Queries.GetDashboeardData
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    AccountNumber = user.Account.AccountNumber,
                     Balance = user.Account.Balance,
                     TotalTransactions = user.Transactions.Count
                 },
@@ -62,6 +64,7 @@ namespace DigitalWallet.Application.Services.Users.Queries.GetDashboeardData
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public long AccountNumber { get; set; }
         public decimal Balance { get; set; }
         public int TotalTransactions { get; set; }
     }
